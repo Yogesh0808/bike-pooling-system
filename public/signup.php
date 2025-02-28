@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
-
+    <form method="POST" enctype="multipart/form-data">
     <div class="registration-container">
         <div class="profile-pic-container">
             <div class="profile-pic-icon"></div>
@@ -170,5 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit">SIGN UP</button>
     </div>
     </div>
+    </form>
 </body>
 </html>

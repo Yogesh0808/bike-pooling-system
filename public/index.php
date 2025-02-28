@@ -14,12 +14,12 @@ include '../includes/session.php';
         body {
             background-color: #F27900;
             font-family: 'Google Italic', sans-serif;
-            color: white;
             text-align: center;
             margin: 0;
             padding: 0;
         }
         .banner-section {
+            color: white;
             display: flex;
             align-items: center;
             height: 90vh;
@@ -27,7 +27,7 @@ include '../includes/session.php';
         }
         .banner-text {
             text-align: left;
-            width: 100%; /* Take full width */
+            width: 100%; 
             display: flex;
             flex-direction: column;
             justify-content: center; /* Center content vertically */
@@ -107,36 +107,75 @@ include '../includes/session.php';
             color: #F27900;
         }
     </style>
+    <link type="text/css" href="../assets/css/style.css" />
 </head>
 <body>
+
     <?php include '../includes/header.php'; ?>
-    
+
+    <!-- Banner Section -->
     <section class="banner-section">
         <div class="banner-text">
-            <h1>Are You Want to Become <br> Co-Rider!!</h1>
-            <a href="book_ride.php">Book as Rider</a>
+            <h1>Are You Want to Become <br> <span>Co-Rider!!</span></h1>
+            <a href="rider_signup.php" class="rider-btn">Book as Rider</a>
         </div>
         <div class="banner-image">
-            <img src="https://images.tractorjunction.com/3_RV_400_3b1b9bc0aa.png?format=webp" alt="Bike Image">
+            <img src="../assets/images/banner-bike.webp" alt="Bike Image">
         </div>
     </section>
-    
+
+    <!-- Search Section -->
     <section class="search-section">
-        <div class="search-bar">
-            <div style="flex: 1; position: relative;">
-                <i class="fas fa-map-marker-alt icon" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);"></i>
-                <input type="text" name="from" placeholder="Leaving from" required style="padding-left: 35px;">
+        <form action="search.php" method="post" class="search-bar">
+            <div class="search-box">
+                <div class="search-field">
+                    <i class="fas fa-map-marker-alt icon"></i>
+                    <input type="text" name="pickup" placeholder="Leaving from" required>
+                </div>
+                <div class="search-field">
+                    <i class="fas fa-flag-checkered icon"></i>
+                    <input type="text" name="destination" placeholder="Going to" required>
+                </div>
+                <div class="search-field">
+                    <i class="fas fa-calendar-alt icon"></i>
+                    <input type="date" name="date" required>
+                </div>
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
             </div>
-            <div style="flex: 1; position: relative;">
-                <i class="fas fa-flag-checkered icon" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);"></i>
-                <input type="text" name="to" placeholder="Going to" required style="padding-left: 35px;">
+        </form>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h1>Our Services</h1>
+        <div class="service-content">
+            <div class="content1">
+                <h2>Bike Pooling</h2>
+                <h4>Bike pooling helps people share rides, reducing traffic and saving costs. It’s a smart way to travel while being environmentally conscious.</h4>
+                <img src="../assets/images/bike-pooling.avif" alt="Bike Pooling">
             </div>
-            <div style="flex: 1; position: relative;">
-                <i class="fas fa-calendar-alt icon" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);"></i>
-                <input type="date" name="date" required style="padding-left: 35px;">
+            <div class="content2">
+                <h2>Bike Renting</h2>
+                <h4>Rent a bike for short or long durations with flexible plans. Ideal for daily commutes or travel enthusiasts who need easy mobility.</h4>
+                <img src="../assets/images/bike-rent.svg" alt="Bike Renting">
             </div>
-            <button type="submit"><i class="fas fa-search"></i> Search</button>
         </div>
     </section>
+
+    <!-- Footer Section -->
+    <footer id="contacts">
+        <p>© 2025 Your Company. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            var storedImageUrl = localStorage.getItem('background_image');
+            if (storedImageUrl) {
+                document.querySelector(".right-nav .profile_div").style.backgroundImage = "url('" + storedImageUrl + "')";
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+
 </body>
 </html>

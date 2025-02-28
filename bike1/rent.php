@@ -1,6 +1,5 @@
 <?php
-require '../config/database.php';
-require '../includes/session.php';
+require 'conn.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +11,7 @@ require '../includes/session.php';
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100&family=Inter:wght@200&family=Pacifico&family=Poppins:ital,wght@0,200;1,100&family=Sofia+Sans:wght@300&display=swap" rel="stylesheet">
 <style>
+
 :root {
   --primary-color: #f07900;
 }
@@ -128,6 +128,8 @@ background: #efefef;
     margin-left:20px;
    
 }
+
+
 a{
     text-decoration:none;
 }
@@ -141,10 +143,12 @@ a{
         <option value="all">All</option>
         <option value="30">Rent Less than 30 days</option>
         <option value="31">Rent greater than 30 days</option>
+        <!-- Add more filter options as needed -->
     </select>
     <button type="submit">Search</button>
    <a href="cart.php" ><div class="cart" >
-        <img src="cart.png">     
+        <img src="cart.png">
+        
     </div>
 </a>
 </form>
@@ -167,16 +171,12 @@ a{
         else{
             $sql = "SELECT * FROM rent_vechicle WHERE rent_days >= '$filter'";
         }
-        $result = $conn->prepare($sql);
-        $result->execute();
+$result = $conn->query($sql);
 
-        $i = 0;
-        
-        if ($result->rowCount() > 0) {  
-        
+$i = 0; // Initialize the loop counter variable
+if ($result->num_rows > 0) {
     // Output data of each row
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {  
-
+    while ($row = $result->fetch_assoc()) {
 ?>
         <div class="display_div">
             <div class="image_div">
@@ -282,6 +282,10 @@ function addToCart(name, number, days, price, img) {
     document.body.appendChild(form);
     form.submit();
 }
+
+
+
+
 
 </script>
 <script src="cart.js"></script>
