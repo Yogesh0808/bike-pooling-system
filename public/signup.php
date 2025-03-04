@@ -5,9 +5,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = uniqid('U');
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
     $mobile_no = $_POST['mobile_no'];
     $gender = $_POST['gender'];
+
+    // Validate password match
+    if ($password !== $confirm_password) {
+        echo "<script>alert('Passwords do not match!');</script>";
+        exit();
+    }
+
+    $password = password_hash($password, PASSWORD_DEFAULT);
 
     // Handle profile picture upload
     $profile_pic = null;
@@ -15,20 +24,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $profile_pic = file_get_contents($_FILES['profile_pic']['tmp_name']);
     }
 
-    $stmt = $conn->prepare("INSERT INTO users (user_id, username, password, email, mobile_no, gender, profile_pic) VALUES (:user_id, :username, :password, :email, :mobile_no, :gender, :profile_pic)");
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':mobile_no', $mobile_no);
-    $stmt->bindParam(':gender', $gender);
-    $stmt->bindParam(':profile_pic', $profile_pic, PDO::PARAM_LOB);
+    try {
+        $stmt = $conn->prepare("INSERT INTO users (user_id, username, password, email, mobile_no, gender, profile_pic) VALUES (:user_id, :username, :password, :email, :mobile_no, :gender, :profile_pic)");
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':mobile_no', $mobile_no);
+        $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':profile_pic', $profile_pic, PDO::PARAM_LOB);
 
-    if ($stmt->execute()) {
-        echo "<script>alert('Registration successful!'); window.location.href='login.php';</script>";
-        exit();
-    } else {
-        echo "<script>alert('Error in registration!');</script>";
+        if ($stmt->execute()) {
+            echo "<script>alert('Registration successful!'); window.location.href='login.php';</script>";
+            exit();
+        } else {
+            echo "<script>alert('Error in registration!');</script>";
+        }
+    } catch (PDOException $e) {
+        echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
     }
 }
 ?>
@@ -121,55 +134,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <?php include '../includes/header.php'; ?>
     <form method="POST" enctype="multipart/form-data">
-    <div class="registration-container">
-        <div class="profile-pic-container">
-            <div class="profile-pic-icon"></div>
-            <label for="profile_pic">Profile Picture:</label>
-            <input type="file" name="profile_pic" id="profile_pic" accept="image/*">
-        </div>
+        <div class="registration-container">
+            <div class="profile-pic-container">
+                <div class="profile-pic-icon"></div>
+                <label for="profile_pic">Profile Picture:</label>
+                <input type="file" name="profile_pic" id="profile_pic" accept="image/*">
+            </div>
 
-        <div>
-            <label for="username">Name:</label>
-            <input type="text" name="username" placeholder="Enter your full name" required>
-        </div>
+            <div>
+                <label for="username">Name:</label>
+                <input type="text" name="username" placeholder="Enter your full name" required>
+            </div>
 
-        <div>
-            <label for="email">Email ID:</label>
-            <input type="email" name="email" placeholder="Enter your email" required>
-        </div>
+            <div>
+                <label for="email">Email ID:</label>
+                <input type="email" name="email" placeholder="Enter your email" required>
+            </div>
 
-        <div>
-            <label for="mobile_no">Mobile No:</label>
-            <input type="text" name="mobile_no" placeholder="Enter your mobile number" required>
-        </div>
+            <div>
+                <label for="mobile_no">Mobile No:</label>
+                <input type="text" name="mobile_no" placeholder="Enter your mobile number" required>
+            </div>
 
-        <div>
-            <label for="gender">Gender:</label>
-            <select name="gender">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
-        </div>
+            <div>
+                <label for="gender">Gender:</label>
+                <select name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
 
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" name="username" placeholder="Enter Username" required>
-        </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
 
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password" placeholder="Enter your password" required>
-        </div>
+            <div>
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" name="confirm_password" placeholder="Re-enter your password" required>
+            </div>
 
-        <div>
-            <label for="confirm_password">Confirm Password:</label>
-            <input type="password" name="confirm_password" placeholder="Re-enter your password" required>
+            <div>
+                <button type="submit">SIGN UP</button>
+            </div>
         </div>
-
-        <div>
-        <button type="submit">SIGN UP</button>
-    </div>
-    </div>
     </form>
 </body>
 </html>

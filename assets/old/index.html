@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100&family=Inter:wght@200&family=Pacifico&family=Poppins:ital,wght@0,200;1,100&family=Sofia+Sans:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.profile_div {
+  height: 30px;
+  width: 30px;
+  margin-left:10px;
+  background: rgb(24, 20, 20);
+  border-radius: 50%;
+  background-image: url("images/images.png");
+  background-size:cover;
+  margin-right: 9px;
+ 
+}
+
+</style>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="left-nav">
+            <h2>logo</h2>
+        </div>
+        <div class="center-nav">
+            <li><a href="">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="driver_signup.php">Rent</a></li>
+            <li><a href="#contacts">Contact</a></li>
+            
+        </div>
+		<div class="right-nav">
+               <div class="container">
+        
+        <input type="checkbox" onchange="" id="check">
+        <label for="check" class="switch"></label>
+         </div>
+            <div class="profile_div"><div id="profile_img"></div></div>
+            <button onclick="location.href='login.php'" class="login-btn">LOGIN</button>
+        </div>
+
+    </div>
+
+	<section class="banner">
+	 <h1>Are <span>You</span> Want to Became <br><span>Co-Rider!!</span></h1>
+     <button class="rider_btn" onclick="location.href='driver_signup.php'">Book as Rider</button>
+	 <img src="images/bike_light.png" alt="vintage-bike" class="vintage-img">
+   
+    </section>
+    <section class="section2">
+         <div class="search-vechicle">
+            <form action="search.php"  method="post">
+            <div class="search-box">
+            
+                    <div class="pickup" > 
+                        <img src="images/icons8-location-64.png">
+                        <input type="text" placeholder="Leaving From" name="pickup">
+                    </div>
+                    <div class="destination"> 
+                        <img src="images/icons8-location-64.png">
+                        <input type="text"  placeholder="Going to" name="destination">
+                    </div>
+                    <div class="date"> 
+                        <img src="images/icons8-date-64.png">
+                        <input type="date"   name="date">
+                    </div>
+               
+            </div>
+            <input type="submit" name="SEARCH" onclick="location.href='search.php'">
+        </form>
+             
+         </div>
+    </section>
+    <section class="services">
+        <h1>Our Services</h1>
+        <div class="service-content">
+            <div class="content1">
+                <h2>Bike pooling</h2>
+                <h4>Bike pooling is a practice where people share bikes for traveling purposes.
+                      bikes that travel along the same route. Bike pooling has many benefits, such as reducing traffic congestion, lowering pollution, saving costs, and providing real-time navigation. 
+                </h4>
+           
+            <img src="images/co-pilot.png">
+            </div>
+            <div class="content2">
+                <h2>Bike Renting</h2>
+                <h4>Bike renting is a service where people can rent bikes for a short or long period of time. 
+                 Bike renting also provides flexible plans for users, such as hourly, daily,
+                      weekly, or monthly rentals.</h4>
+                      
+                <img src="images/rent-bike.png">
+            </div>
+        </div>
+    </section>
+    <footer id="contacts">
+
+    </footer>
+    <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Retrieve image URL from localStorage
+        var storedImageUrl = localStorage.getItem('background_image');
+        if (storedImageUrl) {
+            document.querySelector(".right-nav .profile_div").style.backgroundImage = "url('" + storedImageUrl + "')";
+        }
+    });
+        </script>
+<script src="script.js">
+
+</script>
+</body>
+</html>

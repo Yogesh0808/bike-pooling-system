@@ -127,7 +127,7 @@ include '../includes/session.php';
     <!-- Search Section -->
     <section class="search-section">
         <form action="search.php" method="post" class="search-bar">
-            <div class="search-box">
+            <div class="search-bar">
                 <div class="search-field">
                     <i class="fas fa-map-marker-alt icon"></i>
                     <input type="text" name="pickup" placeholder="Leaving from" required>

@@ -1,6 +1,5 @@
 <?php
-require '../config/database.php';
-require '../includes/session.php';
+require 'conn.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +11,7 @@ require '../includes/session.php';
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100&family=Inter:wght@200&family=Pacifico&family=Poppins:ital,wght@0,200;1,100&family=Sofia+Sans:wght@300&display=swap" rel="stylesheet">
 <style>
+
 :root {
   --primary-color: #f07900;
 }
@@ -38,12 +38,10 @@ body {
        margin-right:20px;
     }
 select{
+    border:none;
+    outline:none;
     display:none;
-    padding: 10px 15px;
-    font-size: 14px;
-    border: 1px solid gray;
-    border-radius: 15px;
-    outline: none;
+    
 }
 select option{
 
@@ -73,16 +71,17 @@ background: #efefef;
   justify-items: center;
   margin-top:30px;
 }
-.display_div {
+.display_div{
     height:300px;
     width:80%;
+    
     margin:20px;
     border-radius:13px;
     background: var(--primary-color);
+   
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
-
-.image_div {
+.image_div{
    height:50%;
    width:100%;
     position: relative;
@@ -129,6 +128,8 @@ background: #efefef;
     margin-left:20px;
    
 }
+
+
 a{
     text-decoration:none;
 }
@@ -137,15 +138,17 @@ a{
 <body>
 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <input type="text" name="search" placeholder="Search...">
-    <img src="../assets/icons/filter-list.svg" width="30" id="filter-img">
+    <img src="filter.png" id="filter-img">
     <select name="filter">
         <option value="all">All</option>
         <option value="30">Rent Less than 30 days</option>
         <option value="31">Rent greater than 30 days</option>
+        <!-- Add more filter options as needed -->
     </select>
     <button type="submit">Search</button>
    <a href="cart.php" ><div class="cart" >
-        <img src="../assets/icons/cart-plus.svg">     
+        <img src="cart.png">
+        
     </div>
 </a>
 </form>
@@ -168,16 +171,12 @@ a{
         else{
             $sql = "SELECT * FROM rent_vechicle WHERE rent_days >= '$filter'";
         }
-        $result = $conn->prepare($sql);
-        $result->execute();
+$result = $conn->query($sql);
 
-        $i = 0;
-        
-        if ($result->rowCount() > 0) {  
-        
+$i = 0; // Initialize the loop counter variable
+if ($result->num_rows > 0) {
     // Output data of each row
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {  
-
+    while ($row = $result->fetch_assoc()) {
 ?>
         <div class="display_div">
             <div class="image_div">
@@ -283,6 +282,10 @@ function addToCart(name, number, days, price, img) {
     document.body.appendChild(form);
     form.submit();
 }
+
+
+
+
 
 </script>
 <script src="cart.js"></script>

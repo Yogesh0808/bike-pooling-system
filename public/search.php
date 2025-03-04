@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = !empty($_POST["date"]) ? $_POST["date"] : null;
     $person_no = !empty($_POST["person_no"]) ? (int) $_POST["person_no"] : null;
 
-    $sql = "SELECT * FROM rider_details WHERE 1=1";
+    $sql = "SELECT * FROM trips WHERE 1=1";
     $params = [];
     $types = "";
 
